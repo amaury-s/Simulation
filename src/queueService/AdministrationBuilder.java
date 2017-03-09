@@ -35,7 +35,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		this.context = context;
 		
-		context.setId("queueSimulator");
+		context.setId("queueService");
 		
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		
