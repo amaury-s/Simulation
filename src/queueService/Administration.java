@@ -29,4 +29,5 @@ public class Administration {
 		space.moveTo(user, 30, 30);
 		grid.moveTo(user, 30, 30);
 	}
+	
 }
