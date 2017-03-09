@@ -46,6 +46,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 				50, 50);
 					
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		
 		this.grid = gridFactory.createGrid("grid", context, 
 				new GridBuilderParameters<Object>(new StrictBorders(),
 						new SimpleGridAdder<Object>(),
@@ -55,7 +56,9 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		int userCount = (Integer)params.getValue("user_count");
 		for(int i = 0; i < userCount; i++) {
-			context.add(new User(space, grid));
+			User user = new User(space, grid);
+			context.add(user);
+			Administration.waitingQueue.add(user);
 		}
 		
 		context.add(new Administration(space, grid)); 

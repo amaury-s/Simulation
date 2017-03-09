@@ -21,8 +21,10 @@ public class User {
 	
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
+	public boolean isWaiting;
 	
 	public User(ContinuousSpace<Object> space, Grid<Object> grid) {
+		this.isWaiting = true;
 		this.space = space;
 		this.grid = grid;
 	}
@@ -45,9 +47,19 @@ public class User {
 	
 	private GridPoint pointToGo() {
 		
-		GridPoint pt = new GridPoint(3,4);
+		GridPoint pt = new GridPoint();
+		
+		if(isWaiting){
+			pt = new GridPoint(25,25 + getPositionIntoWaitingQueue());
+		}else{
+			pt = new GridPoint(25,49);
+		}
 		
 		return pt;
+	}
+	
+	private int getPositionIntoWaitingQueue(){
+		return Administration.waitingQueue.indexOf(this);
 	}
 	
 	private GridPoint myLocation() {
