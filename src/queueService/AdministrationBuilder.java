@@ -21,6 +21,7 @@ import repast.simphony.space.continuous.RandomCartesianAdder;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
+import repast.simphony.space.grid.StrictBorders;
 import repast.simphony.space.grid.WrapAroundBorders;
 import repast.simphony.util.ContextUtils;
 import repast.simphony.util.SimUtilities;
@@ -41,12 +42,13 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		this.space = spaceFactory.createContinuousSpace("space", context,
 				new RandomCartesianAdder<Object>(),
-				new repast.simphony.space.continuous.WrapAroundBorders(),
+				new repast.simphony.space.continuous.StrictBorders(),
 				50, 50);
 					
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		
 		this.grid = gridFactory.createGrid("grid", context, 
-				new GridBuilderParameters<Object>(new WrapAroundBorders(),
+				new GridBuilderParameters<Object>(new StrictBorders(),
 						new SimpleGridAdder<Object>(),
 						true, 50, 50));
 		
@@ -54,7 +56,9 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		int userCount = (Integer)params.getValue("user_count");
 		for(int i = 0; i < userCount; i++) {
-			context.add(new User(space, grid));
+			User user = new User(space, grid);
+			context.add(user);
+			Administration.waitingQueue.add(user);
 		}
 		
 		context.add(new Administration(space, grid));
