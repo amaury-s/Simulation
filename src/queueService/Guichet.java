@@ -19,19 +19,22 @@ import repast.simphony.util.SimUtilities;
 
 public class Guichet {
 	
-	private ContinuousSpace<Object> space;
-	private Grid<Object> grid;
+	public ContinuousSpace<Object> space;
+	public Grid<Object> grid;
+	public boolean isFree;
 	
 	public Guichet(ContinuousSpace<Object> space, Grid<Object> grid) {
+		this.isFree = true;
 		this.space = space;
 		this.grid = grid;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {		
-		System.out.println(myLocation());
+		//System.out.println(this.myLocation());
 	}
-	private GridPoint myLocation() {
+	
+	public GridPoint myLocation() {
 		return grid.getLocation(this);
 	}
 

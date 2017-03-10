@@ -1,6 +1,7 @@
 package queueService;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
@@ -55,18 +56,24 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		
 		int userCount = (Integer)params.getValue("user_count");
+		
 		for(int i = 0; i < userCount; i++) {
-			User user = new User(space, grid);
+			User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1), 0);
 			context.add(user);
 			Administration.waitingQueue.add(user);
 		}
 		
-		context.add(new Administration(space, grid)); 
-
-		context.add(new Guichet(space, grid));
-
+		context.add(new Administration(space, grid));
 		
+		Guichet aGuichet = new Guichet(space, grid);
+
+		context.add(aGuichet);
 		
+		aGuichet.space.moveTo(aGuichet, 25,30);
+		aGuichet.grid.moveTo(aGuichet, 25,30);
+		
+		Administration.listOfGuichet.add(aGuichet);
+
 		return context;
 	}
 	

@@ -19,19 +19,33 @@ import repast.simphony.util.SimUtilities;
 
 public class User {
 	
+	public double arrivalTick;
+	public double endOfWaiting;
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	public boolean isWaiting;
+	public Guichet usedGuichet;
+	public int numberOfTickOfService;
 	
-	public User(ContinuousSpace<Object> space, Grid<Object> grid) {
+	public User(ContinuousSpace<Object> space, Grid<Object> grid, int pNumberOfTickOfService, double pArrivalTick) {
+		this.arrivalTick = pArrivalTick;
+		this.numberOfTickOfService = pNumberOfTickOfService;
 		this.isWaiting = true;
 		this.space = space;
 		this.grid = grid;
+		this.usedGuichet = null;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
-	public void step() {		
+	public void step() {	
+		System.out.println(this.toString());
 		moveTowards(pointToGo());
+		if(this.usedGuichet != null){
+			if(--this.numberOfTickOfService == 0){
+				this.usedGuichet.isFree = true;
+				this.usedGuichet = null;
+			}
+		}
 	}
 	
 	public void moveTowards(GridPoint pt) {
@@ -50,9 +64,11 @@ public class User {
 		GridPoint pt = new GridPoint();
 		
 		if(isWaiting){
-			pt = new GridPoint(25,25 + getPositionIntoWaitingQueue());
+			pt = new GridPoint(25,25 + (-1)*getPositionIntoWaitingQueue());
+		}else if(this.usedGuichet != null){
+			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
 		}else{
-			pt = new GridPoint(25,49);
+			pt = new GridPoint(1,1);
 		}
 		
 		return pt;
@@ -64,6 +80,19 @@ public class User {
 	
 	private GridPoint myLocation() {
 		return grid.getLocation(this);
+	}
+	
+	public String toString(){
+		StringBuilder result = new StringBuilder();
+		
+		result.append("############################## \n");
+		result.append("# User id : " + this.arrivalTick + "\n");
+		result.append("# User is waiting : " + this.isWaiting + "\n");
+		result.append("# Duration of service : " + this.numberOfTickOfService + "\n");
+		result.append("# End of waiting : " + this.endOfWaiting + "\n");
+		result.append("############################## \n");
+		
+		return result.toString();
 	}
 
 }
