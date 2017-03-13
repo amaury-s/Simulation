@@ -17,6 +17,7 @@ public class Administration {
 	private Grid<Object> grid;
 	public static List<User> waitingQueue = new ArrayList<>();
 	public static List<Guichet> listOfGuichet = new ArrayList<>();
+	public final static int kindOfQueueSorting = (Integer) RunEnvironment.getInstance().getParameters().getValue("kind_of_queue_sorting");
 	
 	public Administration(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
@@ -30,21 +31,20 @@ public class Administration {
 		
 		for(Guichet aFreeGuichet: listOfFreeGuichet){
 			if (waitingQueue.get(0) != null){
-				/*FIFO
-				User firstUser = waitingQueue.get(0);
-				waitingQueue.remove(0);
-				firstUser.usedGuichet = aFreeGuichet;
-				firstUser.isWaiting = false;
-				aFreeGuichet.isFree = false;
-				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				*/
-				User firstUser = waitingQueue.get (FindNextUser());
+				User firstUser = new User();
+				switch (kindOfQueueSorting){
+	            case 1:
+	            	firstUser = waitingQueue.get(0);
+	            	break;
+	            case 2:
+	            	firstUser = waitingQueue.get (FindNextUser());
+	            	break;
+				}
 				waitingQueue.remove(firstUser);
 				firstUser.usedGuichet = aFreeGuichet;
 				firstUser.isWaiting = false;
 				aFreeGuichet.isFree = false;
 				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				System.out.println("Duration of service : " + firstUser.numberOfTickOfService + "\n");
 			}
 		}
 	}

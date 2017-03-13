@@ -37,6 +37,8 @@ public class User {
 		this.endOfWaiting = 0;
 	}
 	
+	public User(){}
+	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {	
 		System.out.println(this.toString());
