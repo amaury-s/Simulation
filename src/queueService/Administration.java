@@ -30,15 +30,32 @@ public class Administration {
 		
 		for(Guichet aFreeGuichet: listOfFreeGuichet){
 			if (waitingQueue.get(0) != null){
+				/*FIFO
 				User firstUser = waitingQueue.get(0);
 				waitingQueue.remove(0);
 				firstUser.usedGuichet = aFreeGuichet;
 				firstUser.isWaiting = false;
 				aFreeGuichet.isFree = false;
 				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+				*/
+				User firstUser = waitingQueue.get (FindNextUser());
+				waitingQueue.remove(firstUser);
+				firstUser.usedGuichet = aFreeGuichet;
+				firstUser.isWaiting = false;
+				aFreeGuichet.isFree = false;
+				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+				System.out.println("Duration of service : " + firstUser.numberOfTickOfService + "\n");
 			}
 		}
-		
+	}
+	public int FindNextUser(){
+		User min = waitingQueue.get(0);
+		for(User user:waitingQueue){
+			if(min.numberOfTickOfService > user.numberOfTickOfService){
+				min.numberOfTickOfService=user.numberOfTickOfService;
+			}
+		}
+		return waitingQueue.indexOf(min);
 	}
 	
 	@ScheduledMethod(start = 10, interval = 10)
@@ -47,7 +64,6 @@ public class Administration {
 			User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
 			
 			Context<Object> context = ContextUtils.getContext(this);
-
 			context.add(user);
 			
 			waitingQueue.add(user);
