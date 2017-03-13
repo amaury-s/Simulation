@@ -43,16 +43,18 @@ public class Administration {
 	
 	@ScheduledMethod(start = 10, interval = 10)
 	public void addUser() {
-		User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
-		
-		Context<Object> context = ContextUtils.getContext(this);
+		if(RunEnvironment.getInstance().getCurrentSchedule().getTickCount() <= 700){
+			User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+			
+			Context<Object> context = ContextUtils.getContext(this);
 
-		context.add(user);
-		
-		waitingQueue.add(user);
-		
-		space.moveTo(user, 25, 0);
-		grid.moveTo(user, 25, 0);
+			context.add(user);
+			
+			waitingQueue.add(user);
+			
+			space.moveTo(user, 25, 0);
+			grid.moveTo(user, 25, 0);
+		}
 	}
 	
 	private List<Guichet> getFreeGuichets(){

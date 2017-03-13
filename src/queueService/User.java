@@ -34,6 +34,7 @@ public class User {
 		this.space = space;
 		this.grid = grid;
 		this.usedGuichet = null;
+		this.endOfWaiting = 0;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
@@ -93,6 +94,10 @@ public class User {
 		result.append("############################## \n");
 		
 		return result.toString();
+	}
+	
+	public double getWaitingTime(){
+		return (this.endOfWaiting == 0 ? 0 : (this.endOfWaiting - this.arrivalTick));
 	}
 
 }
