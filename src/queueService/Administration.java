@@ -30,7 +30,7 @@ public class Administration {
 		List<Guichet> listOfFreeGuichet = getFreeGuichets();
 		
 		for(Guichet aFreeGuichet: listOfFreeGuichet){
-			if (waitingQueue.get(0) != null){
+			if (!waitingQueue.isEmpty()){
 				User firstUser = new User();
 				switch (kindOfQueueSorting){
 	            case 1:
@@ -48,6 +48,7 @@ public class Administration {
 			}
 		}
 	}
+	
 	public int FindNextUser(){
 		User min = waitingQueue.get(0);
 		for(User user:waitingQueue){
