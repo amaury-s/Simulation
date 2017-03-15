@@ -23,7 +23,8 @@ public class Administration {
 	private Grid<Object> grid;
 	public static List<User> waitingQueue = new ArrayList<>();
 	public static List<Guichet> listOfGuichet = new ArrayList<>();
-		
+	public final static int kindOfQueueSorting = (Integer) RunEnvironment.getInstance().getParameters().getValue("kind_of_queue_sorting");
+	
 	public Administration(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
 		this.grid = grid;
@@ -35,22 +36,21 @@ public class Administration {
 		List<Guichet> listOfFreeGuichet = getFreeGuichets();
 		
 		for(Guichet aFreeGuichet: listOfFreeGuichet){
-			if (waitingQueue.get(0) != null){
-				/*FIFO
-				User firstUser = waitingQueue.get(0);
-				waitingQueue.remove(0);
-				firstUser.usedGuichet = aFreeGuichet;
-				firstUser.isWaiting = false;
-				aFreeGuichet.isFree = false;
-				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				*/
-				User firstUser = waitingQueue.get (FindNextUser());
+			if (!waitingQueue.isEmpty()){
+				User firstUser = new User();
+				switch (kindOfQueueSorting){
+	            case 1:
+	            	firstUser = waitingQueue.get(0);
+	            	break;
+	            case 2:
+	            	firstUser = waitingQueue.get (FindNextUser());
+	            	break;
+				}
 				waitingQueue.remove(firstUser);
 				firstUser.usedGuichet = aFreeGuichet;
 				firstUser.isWaiting = false;
 				aFreeGuichet.isFree = false;
 				firstUser.endOfWaiting = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				System.out.println("Duration of service : " + firstUser.numberOfTickOfService + "\n");
 			}
 		}
 	}
@@ -67,6 +67,7 @@ public class Administration {
 	
 	@ScheduledMethod(start = 10, interval = 1)
 	public void addUser() {
+
 			
 		Double[][] affMatrix = getAffMatrix();
     	int[][] comingMatrix=getPeopleComingPerHourPerDay(affMatrix);
@@ -78,6 +79,9 @@ public class Administration {
     	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1),ticks.get(0)); //ce sera pas get(0) evidemment
     	
     	Context<Object> context = ContextUtils.getContext(this);
+
+		if(RunEnvironment.getInstance().getCurrentSchedule().getTickCount() <= 700){
+			
 			
 		context.add(user);
 			
@@ -85,6 +89,7 @@ public class Administration {
 				
 		space.moveTo(user, 25, 0);
 		grid.moveTo(user, 25, 0);
+		}
     	
 	}
 	

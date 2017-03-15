@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
 				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
-						defaultValue="__NULL__"
-						isReadOnly="false" 
+						defaultValue="__NULL__" isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"/>
 						
 				<parameter name="user_count" displayName="User Count" type="int" 
 						defaultValue="0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"/>
+						
+						
+				<!-- This parameter set the kind of queue sorting 
+					1 => First In First Out
+					2 => Shortest Task First
+				-->		
+				<parameter name="kind_of_queue_sorting" displayName="Kind of queue sorting" type="int" 
+				defaultValue="2" isReadOnly="false" 
+				converter="repast.simphony.parameter.StringConverterFactory$IntConverter"/>
 
 </parameters>
