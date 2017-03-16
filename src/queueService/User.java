@@ -1,7 +1,9 @@
 package queueService;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -18,7 +20,7 @@ import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.ContextUtils;
 import repast.simphony.util.SimUtilities;
 
-public class User {
+public class User{
 	
 	public double arrivalTick;
 	public double endOfWaiting;
@@ -90,7 +92,7 @@ public class User {
 		StringBuilder result = new StringBuilder();
 		
 		result.append("############################## \n");
-		result.append("# User id : " + this.arrivalTick + "\n");
+		result.append("# User arrival : " + this.arrivalTick + "\n");
 		result.append("# User is waiting : " + this.isWaiting + "\n");
 		result.append("# Duration of service : " + this.numberOfTickOfService + "\n");
 		result.append("# End of waiting : " + this.endOfWaiting + "\n");
