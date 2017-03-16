@@ -1,5 +1,6 @@
 package queueService;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,7 +79,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		Administration.listOfGuichet.add(aGuichet);
 		
-		Double[][] affMatrix = getAffMatrix();
+		float[][] affMatrix = getAffMatrix();
     	int[][] comingMatrix = getPeopleComingPerHourPerDay(affMatrix);
     	commingTicks.addAll(getListOfArrivalTicks(comingMatrix,"tuesday"));
 
@@ -87,14 +88,14 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	
 	/****************************************************************************************************/
 	
-	public static Double getRandArrivingTime(Double beginning, Double end){
+	public static int getRandArrivalTime(int beginning, int end){
 		final Random random = new Random();
-		int arrivingTimeInMs = (int) (((end-beginning + 1) + beginning) * random.nextDouble());
-		return (double)arrivingTimeInMs;
+		int arrivingTimeInMs = random.nextInt((end-beginning + 1) + beginning);
+		return arrivingTimeInMs;
 	}
-			
+	
 	/* returns a matrix of percentages [day][opening hours] */
-	public static Double[][] getAffMatrix(){
+	public static float[][] getAffMatrix(){
 	/* this fct generates a matrix giving a percentage for each hour of each day for caf paris 15*/
 	/* to understand my idea:
 	 *   from figures gathered on the CAF website we can find an average of people coming per day 
@@ -105,18 +106,15 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 				
 						
 		final Random random = new Random();
-						
-		Double weak=0.08; //weak affluence, perc. of total nb of people coming per day in pondered average
-		Double moderate=0.15; //moderate aff
-		Double strong=0.30; //strong aff
-		Double delta=0.1;
-		Double w=1.0;
-		Double m=2.0;
-		Double s=3.0;
+					
+		float delta=0.1f;
+		float w=0.08f;   //weak affluence, perc. of total nb of people coming per day in pondered average
+		float m=0.15f;   //moderate aff
+		float s=0.30f;   //strong aff
 			
 		/*matrix based on a schedule from caf website giving affluence */
 			
-		Double[][] aff=
+		float[][] aff=
 			{
 		        { m, m, s, s, m, m, s, s } , // tab[day][hour] 
 		        { w, w, m, m, m, m, w, w },    //as we take caf paris 15 as example, only 4 opening days
@@ -126,15 +124,15 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 				
 		for (int i=0;i<aff.length;i++){
 			for (int j=0;j<aff[i].length;j++){
-								
+			
 				if (aff[i][j]==w)
-					aff[i][j]=(weak-weak*delta) + ((weak+weak*delta) - (weak-weak*delta)) * random.nextDouble();// rajouter +- 10%
+					aff[i][j]=(w-w*delta) + ((w+w*delta) - (w-w*delta)) * random.nextFloat();// rajouter +- 10%
 				
 				if (aff[i][j]== m)
-					aff[i][j]=(moderate-moderate*delta) + ((moderate+moderate*delta) - (moderate-moderate*delta)) * random.nextDouble();
+					aff[i][j]=(m-m*delta) + ((m+m*delta) - (m-m*delta)) * random.nextFloat();
 						
 				if (aff[i][j]==s)
-					aff[i][j]=(strong-strong*delta) + ((strong+strong*delta) - (strong-strong*delta)) * random.nextDouble();
+					aff[i][j]=(s-s*delta) + ((s+s*delta) - (s-s*delta)) * random.nextFloat();
 						
 						
 				//System.out.print(aff[i][j]+" ");
@@ -146,13 +144,15 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	}	   
 			
 	/* returns a nb of people coming to the admin per hour based on affMatrix  */
-	public static int getRandNbPeoplePerHour(Double[][] affMatrix, String day, Double hour){
-		int averagePeople=200; //average people per day based on caf's figures
+	public static int getRandNbPeoplePerHour(float[][] affMatrix, String day, int hour){
+		int averagePeople=2400; //average people per day based on caf's figures
 		int nbPeople; //people coming on a given day and time
 				
 		String[] days={"monday","tuesday","thursday","friday"};
 			
-		Double[] hours={0.0,360.0,720.0,1080.0,1440.0,1800.0,2160.0,2520.0};
+		// Real Time
+		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000};
+		int[] hours={0,36000,72000,108000,144000,180000,216000,252000};
 			
 		int indexDay=0;
 		int indexHour=0;
@@ -163,7 +163,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		}
 			
 		for (int j=0;j<hours.length;j++){
-			if (hours[j]-hour==0)
+			if (hours[j]==hour)
 				indexHour=j;
 		}
 			
@@ -175,7 +175,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	}
 			
 	/* returns an array of people coming for each time slot during one week [day][opening hours] */
-	public static int[][] getPeopleComingPerHourPerDay(Double[][] affMatrix){
+	public static int[][] getPeopleComingPerHourPerDay(float[][] affMatrix){
 		int[][] coming =
 		    {
 	    		{ 0, 0, 0, 0, 0, 0, 0, 0 } , // tab[day][hour] 
@@ -183,8 +183,10 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		        { 0, 0, 0, 0, 0, 0, 0, 0 },   //monday tuesday thursday friday, from 9am to 5pm 
 		        { 0, 0, 0, 0, 0, 0, 0, 0 },
 			};
-					
-		Double[] hours={0.0,360.0,720.0,1080.0,1440.0,1800.0,2160.0,2520.0};
+		
+		//Real Time		
+		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000};
+		int[] hours={0,360000,720000,1080000,1440000,1800000,2160000,2520000};
 		
 		String[] days={"monday","tuesday","thursday","friday"};
 		
@@ -206,14 +208,17 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		ArrayList<Double> coming = new ArrayList<>();
 		
 		String[] days = {"monday","tuesday","thursday","friday"};
+		
 		int indexDay = -1;
 		
 		for (int i = 0; i < days.length; i++){
 			if (days[i] == day)
 				indexDay = i;
 		}
-							
-		Double[] hours = {0.0,360.0,720.0,1080.0,1440.0,1800.0,2160.0,2520.0,2880.0};
+		
+		// Real Time
+		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000,28800000};
+		int[] hours={0,36000,72000,108000,144000,180000,216000,252000,288000};
 						
 		//Double time=0.0;  
 		//Double oneHour=3600000.0;  
@@ -222,7 +227,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		for (int j = 0; j < 8; j++){
 			int nb = 0;
 			while (nb < comingMatrix[indexDay][j]){ 				
-				coming.add(getRandArrivingTime(hours[j], hours[j+1]));	
+				coming.add((double)getRandArrivalTime(hours[j], hours[j+1]));	
 				nb++;
 			}	
 		}
@@ -238,4 +243,5 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 				
 	}	
 	
+
 }
