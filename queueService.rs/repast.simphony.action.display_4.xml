@@ -1,16 +1,24 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>New Display</name>
+  <name>SimpleDisplay</name>
   <type>2D</type>
   <styles>
     <entry>
       <string>queueService.User</string>
       <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
     </entry>
+    <entry>
+      <string>queueService.Guichet</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
   </styles>
   <editedStyles>
     <entry>
       <string>queueService.User</string>
       <null/>
+    </entry>
+    <entry>
+      <string>queueService.Guichet</string>
+      <string>queueService.Guichet.style_1.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,7 +31,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1141971414</hashCode>
+    <hashCode>148978545</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
@@ -32,6 +40,10 @@
     <entry>
       <string>queueService.User</string>
       <int>0</int>
+    </entry>
+    <entry>
+      <string>queueService.Guichet</string>
+      <int>1</int>
     </entry>
   </layerOrder>
   <projections>

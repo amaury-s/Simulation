@@ -12,6 +12,7 @@
 				<!-- This parameter set the kind of queue sorting 
 					1 => First In First Out
 					2 => Shortest Task First
+					
 				-->		
 				<parameter name="kind_of_queue_sorting" displayName="Kind of queue sorting" type="int" 
 				defaultValue="2" isReadOnly="false" 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
@@ -44,7 +45,7 @@ public class User {
 		System.out.println(this.toString());
 		moveTowards(pointToGo());
 		if(this.usedGuichet != null){
-			if(--this.numberOfTickOfService == 0){
+			if(this.numberOfTickOfService <= RunEnvironment.getInstance().getCurrentSchedule().getTickCount() - this.endOfWaiting){
 				this.usedGuichet.isFree = true;
 				this.usedGuichet = null;
 			}
@@ -100,6 +101,14 @@ public class User {
 	
 	public double getWaitingTime(){
 		return (this.endOfWaiting == 0 ? 0 : (this.endOfWaiting - this.arrivalTick));
+	}
+	
+	public double getNumberOfTickOfService(){
+		return (this.numberOfTickOfService);
+	}
+	
+	public double getArrivalTick(){
+		return (this.arrivalTick);
 	}
 
 }
