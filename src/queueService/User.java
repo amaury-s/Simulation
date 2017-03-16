@@ -70,7 +70,7 @@ public class User{
 		GridPoint pt = new GridPoint();
 		
 		if(isWaiting){
-			pt = new GridPoint(25,25 + (-1)*getPositionIntoWaitingQueue());
+			pt = new GridPoint(35,60 + (-1)*getPositionIntoWaitingQueue());
 		}else if(this.usedGuichet != null){
 			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
 		}else{
