@@ -186,7 +186,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		//Real Time		
 		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000};
-		int[] hours={0,360000,720000,1080000,1440000,1800000,2160000,2520000};
+		int[] hours={0,36000,72000,108000,144000,180000,216000,252000};
 		
 		String[] days={"monday","tuesday","thursday","friday"};
 		
@@ -218,7 +218,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		// Real Time
 		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000,28800000};
-		int[] hours={0,36000,72000,108000,144000,180000,216000,252000,288000};
+		int[] hours={0,36000,72000,108000,144000,180000,216000,252000,288000}; // en secondes x10
 						
 		//Double time=0.0;  
 		//Double oneHour=3600000.0;  

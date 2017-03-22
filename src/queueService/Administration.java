@@ -71,8 +71,8 @@ public class Administration {
 		System.out.println(AdministrationBuilder.commingTicks.get(0));
 		
 		if (AdministrationBuilder.commingTicks.contains(RunEnvironment.getInstance().getCurrentSchedule().getTickCount())){
-			// correspond à entre 10 et 20 minutes en centi secondes
-	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(600, 1200 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+			// correspond à entre 10 et 20 minutes en secondes x10
+	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(6000, 12000 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
 
 	    	Context<Object> context = ContextUtils.getContext(this);
 	    	
