@@ -96,7 +96,7 @@ public class User{
 		}else if(this.usedGuichet != null){
 			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
 		}else{
-			pt = new GridPoint(1,1);
+			pt = new GridPoint(69,1); 
 		}
 		
 		return pt;

@@ -24,6 +24,8 @@ public class Administration {
 	public static List<User> waitingQueue = new ArrayList<>();
 	public static List<Guichet> listOfGuichet = new ArrayList<>();
 	public final static int kindOfQueueSorting = (Integer) RunEnvironment.getInstance().getParameters().getValue("kind_of_queue_sorting");
+	public int c=0;
+	
 	
 	public Administration(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
@@ -69,9 +71,12 @@ public class Administration {
 		
 		if (AdministrationBuilder.commingTicks.contains(RunEnvironment.getInstance().getCurrentSchedule().getTickCount())){
 			System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
-			// correspond � entre 10 et 20 minutes en secondes x10
-	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(360, 720 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
-
+			// correspond entre 10 et 20 minutes en secondes x10
+	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(300, 1200 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+	    	
+	    	c+=1;
+	    	System.out.println(c);
+	    	
 	    	Context<Object> context = ContextUtils.getContext(this);
 	    	
 	    	context.add(user);

@@ -63,7 +63,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		int userCount = (Integer)params.getValue("user_count");
 		
 		for(int i = 0; i < userCount; i++) {
-			User user = new User(space, grid, ThreadLocalRandom.current().nextInt(10, 20 + 1), 0);
+			User user = new User(space, grid, ThreadLocalRandom.current().nextInt(300, 1200 + 1), 0);
 			context.add(user);
 			Administration.waitingQueue.add(user);
 		}
@@ -92,9 +92,9 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
     	int[][] comingMatrix = getPeopleComingPerHourPerDay(affMatrix);
     	commingTicks.addAll(getListOfArrivalTicks(comingMatrix,"tuesday"));
     	
-    	for(Double aDouble: commingTicks){
+    	/*for(Double aDouble: commingTicks){
     		System.out.println(aDouble);
-    	}
+    	}*/
     	
     	
 		return context;
@@ -104,7 +104,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	
 	public static int getRandArrivalTime(int beginning, int end){
 		final Random random = new Random();
-		int arrivingTimeInMs = random.nextInt((end-beginning + 1) + beginning);
+		int arrivingTimeInMs = beginning + random.nextInt(end-beginning + 1) ;
 		return arrivingTimeInMs;
 	}
 	
@@ -223,7 +223,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		String[] days = {"monday","tuesday","thursday","friday"};
 		
-		int indexDay = -1;
+		int indexDay = 0;
 		
 		for (int i = 0; i < days.length; i++){
 			if (days[i] == day)
@@ -239,11 +239,15 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		//parcours matrice du nb de gens qui viennent
 				
 		for (int j = 0; j < 8; j++){
+			
 			int nb = 0;
-			while (nb < comingMatrix[indexDay][j]){ 				
-				coming.add((double)getRandArrivalTime(hours[j], hours[j+1]));	
+			int max = comingMatrix[indexDay][j];
+			
+			while (nb < max){
+				Double newTick= (double)getRandArrivalTime(hours[j], hours[j+1]);
+				coming.add(newTick);	
 				nb++;
-			}	
+			}
 		}
 					
 		Collections.sort(coming);
