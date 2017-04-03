@@ -65,12 +65,34 @@ public class User{
 		}
 	}
 	
+	/*private GridPoint pointToGo() {
+		
+		GridPoint pt = new GridPoint();
+		
+		if(isWaiting){
+			int x=35;
+			int y=60;
+			if((60+(-1)*getPositionIntoWaitingQueue())<10){
+				y=110;
+				x=45;
+			}
+			pt = new GridPoint(x,y+(-1)*getPositionIntoWaitingQueue());
+		}else if(this.usedGuichet != null){
+			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
+		}else{
+			pt = new GridPoint(1,1);
+		}
+		
+		return pt;
+	}*/
 	private GridPoint pointToGo() {
 		
 		GridPoint pt = new GridPoint();
 		
 		if(isWaiting){
-			pt = new GridPoint(35,60 + (-1)*getPositionIntoWaitingQueue());
+			int nbrow = getPositionIntoWaitingQueue()/50;
+			int y = getPositionIntoWaitingQueue()%50;
+			pt = new GridPoint(5+5*nbrow,60+(-1)*y);
 		}else if(this.usedGuichet != null){
 			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
 		}else{
@@ -79,6 +101,8 @@ public class User{
 		
 		return pt;
 	}
+	
+	
 	
 	private int getPositionIntoWaitingQueue(){
 		return Administration.waitingQueue.indexOf(this);

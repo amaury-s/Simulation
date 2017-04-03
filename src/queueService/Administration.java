@@ -67,12 +67,10 @@ public class Administration {
 	@ScheduledMethod(start = 0, interval = 1)
 	public void addUser() {
 		
-		System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
-		System.out.println(AdministrationBuilder.commingTicks.get(0));
-		
 		if (AdministrationBuilder.commingTicks.contains(RunEnvironment.getInstance().getCurrentSchedule().getTickCount())){
-			// correspond à entre 10 et 20 minutes en secondes x10
-	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(6000, 12000 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+			System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+			// correspond ï¿½ entre 10 et 20 minutes en secondes x10
+	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(360, 720 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
 
 	    	Context<Object> context = ContextUtils.getContext(this);
 	    	

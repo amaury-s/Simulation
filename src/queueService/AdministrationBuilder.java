@@ -69,7 +69,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		}
 		
 		context.add(new Administration(space, grid));
-		int nbGuichets = 15;
+		int nbGuichets = 20;
 		ArrayList<Guichet> tabGuichets = new ArrayList();
 		for(int i=0; i < nbGuichets; i++){
 			tabGuichets.add(new Guichet(space, grid));
@@ -91,7 +91,12 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		float[][] affMatrix = getAffMatrix();
     	int[][] comingMatrix = getPeopleComingPerHourPerDay(affMatrix);
     	commingTicks.addAll(getListOfArrivalTicks(comingMatrix,"tuesday"));
-
+    	
+    	for(Double aDouble: commingTicks){
+    		System.out.println(aDouble);
+    	}
+    	
+    	
 		return context;
 	}
 	
@@ -161,7 +166,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 			
 		// Real Time
 		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000};
-		int[] hours={0,36000,72000,108000,144000,180000,216000,252000};
+		int[] hours={0,3600,7200,10800,14400,18000,21600,25200};
 			
 		int indexDay=0;
 		int indexHour=0;
@@ -195,7 +200,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		//Real Time		
 		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000};
-		int[] hours={0,36000,72000,108000,144000,180000,216000,252000};
+		int[] hours={0,3600,7200,10800,14400,18000,21600,25200};
 		
 		String[] days={"monday","tuesday","thursday","friday"};
 		
@@ -227,7 +232,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		// Real Time
 		//int[] hours={0,3600000,7200000,10800000,14400000,18000000,21600000,25200000,28800000};
-		int[] hours={0,36000,72000,108000,144000,180000,216000,252000,288000}; // en secondes x10
+		int[] hours={0,3600,7200,10800,14400,18000,21600,25200,28800}; // en secondes x10
 						
 		//Double time=0.0;  
 		//Double oneHour=3600000.0;  
@@ -247,7 +252,8 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	    {
 			System.out.println (elem);
 	    }*/
-					
+		
+		//System.out.println(coming.size());
 		return coming;
 				
 	}	
