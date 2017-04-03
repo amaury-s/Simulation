@@ -69,16 +69,25 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		}
 		
 		context.add(new Administration(space, grid));
-		
-		Guichet aGuichet = new Guichet(space, grid);
+		int nbGuichets = 15;
+		ArrayList<Guichet> tabGuichets = new ArrayList();
+		for(int i=0; i < nbGuichets; i++){
+			tabGuichets.add(new Guichet(space, grid));
+			context.add(tabGuichets.get(i));
+			tabGuichets.get(i).space.moveTo(tabGuichets.get(i), space.getDimensions().getWidth()*i/nbGuichets + 1,69);
+			tabGuichets.get(i).grid.moveTo(tabGuichets.get(i), grid.getDimensions().getWidth()*i/nbGuichets + 1,69);
+			Administration.listOfGuichet.add(tabGuichets.get(i));
+			/*
+			Guichet aGuichet = new Guichet(space, grid);
 
-		context.add(aGuichet);
+			context.add(aGuichet);
 		
-		aGuichet.space.moveTo(aGuichet, 35,69);
-		aGuichet.grid.moveTo(aGuichet, 35,69);
+			aGuichet.space.moveTo(aGuichet, 5+(i*5),69);
+			aGuichet.grid.moveTo(aGuichet, 5+(i*5),69);
 		
-		Administration.listOfGuichet.add(aGuichet);
-		
+			Administration.listOfGuichet.add(aGuichet);*/
+		}
+				
 		float[][] affMatrix = getAffMatrix();
     	int[][] comingMatrix = getPeopleComingPerHourPerDay(affMatrix);
     	commingTicks.addAll(getListOfArrivalTicks(comingMatrix,"tuesday"));
