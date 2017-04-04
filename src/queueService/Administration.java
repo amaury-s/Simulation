@@ -57,25 +57,29 @@ public class Administration {
 	}
 	
 	public int FindNextUser(){
-		User min = waitingQueue.get(0);
+		int min = 0;
+		int i = 0;
+		//User min = waitingQueue.get(0);
 		for(User user:waitingQueue){
-			if(min.numberOfTickOfService > user.numberOfTickOfService){
-				min.numberOfTickOfService=user.numberOfTickOfService;
+			if(waitingQueue.get(min).numberOfTickOfService > waitingQueue.get(i).numberOfTickOfService){
+				min=i;
 			}
+			i++;
 		}
-		return waitingQueue.indexOf(min);
+		return min;
 	}
 	
 	@ScheduledMethod(start = 0, interval = 1)
 	public void addUser() {
-		
+		 
+		Random random = new Random();
 		if (AdministrationBuilder.commingTicks.contains(RunEnvironment.getInstance().getCurrentSchedule().getTickCount())){
-			System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+			//System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
 			// correspond entre 10 et 20 minutes en secondes x10
-	    	User user = new User(space, grid, ThreadLocalRandom.current().nextInt(300, 1200 + 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
-	    	
+	    	User user = new User(space, grid, 300 + random.nextInt(1200-300+ 1), RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
+	    	//ThreadLocalRandom.current().
 	    	c+=1;
-	    	System.out.println(c);
+	    	//System.out.println(c);
 	    	
 	    	Context<Object> context = ContextUtils.getContext(this);
 	    	

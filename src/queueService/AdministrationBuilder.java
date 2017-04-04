@@ -37,6 +37,8 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	public static List<Double> commingTicks = new ArrayList<>();
+	private int nbGuichets = 5;
+	public static int nbPeople = 2400/10;
 	
 	@Override
 	public Context build(Context<Object> context) {
@@ -69,7 +71,6 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		}
 		
 		context.add(new Administration(space, grid));
-		int nbGuichets = 20;
 		ArrayList<Guichet> tabGuichets = new ArrayList();
 		for(int i=0; i < nbGuichets; i++){
 			tabGuichets.add(new Guichet(space, grid));
@@ -159,7 +160,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 			
 	/* returns a nb of people coming to the admin per hour based on affMatrix  */
 	public static int getRandNbPeoplePerHour(float[][] affMatrix, String day, int hour){
-		int averagePeople=2400; //average people per day based on caf's figures
+		int averagePeople=nbPeople; //average people per day based on caf's figures
 		int nbPeople; //people coming on a given day and time
 				
 		String[] days={"monday","tuesday","thursday","friday"};
@@ -207,10 +208,10 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		for (int i=0;i<4;i++){
 			for (int j=0;j<8;j++){
 				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[j]);
-				System.out.print(coming[i][j]);
-				System.out.print(" ");
+				//System.out.print(coming[i][j]);
+				//System.out.print(" ");
 			}
-			System.out.print("\n");
+			//System.out.print("\n");
 		}
 
 		return coming;
