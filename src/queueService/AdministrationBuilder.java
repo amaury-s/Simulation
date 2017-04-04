@@ -207,10 +207,10 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		for (int i=0;i<4;i++){
 			for (int j=0;j<8;j++){
 				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[j]);
-				//System.out.print(coming[i][j]);
-				//System.out.print(" ");
+				System.out.print(coming[i][j]);
+				System.out.print(" ");
 			}
-			//System.out.print("\n");
+			System.out.print("\n");
 		}
 
 		return coming;

@@ -44,7 +44,7 @@ public class User{
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {	
-		System.out.println(this.toString());
+		//System.out.println(this.toString());
 		moveTowards(pointToGo());
 		if(this.usedGuichet != null){
 			if(this.numberOfTickOfService <= RunEnvironment.getInstance().getCurrentSchedule().getTickCount() - this.endOfWaiting){
@@ -96,7 +96,7 @@ public class User{
 		}else if(this.usedGuichet != null){
 			pt = new GridPoint(usedGuichet.myLocation().getX(), usedGuichet.myLocation().getY());
 		}else{
-			pt = new GridPoint(69,1); 
+			pt = new GridPoint(69,1);
 		}
 		
 		return pt;
