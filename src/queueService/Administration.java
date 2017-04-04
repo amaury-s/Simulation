@@ -71,7 +71,6 @@ public class Administration {
 	
 	@ScheduledMethod(start = 0, interval = 1)
 	public void addUser() {
-		 
 		Random random = new Random();
 		if (AdministrationBuilder.commingTicks.contains(RunEnvironment.getInstance().getCurrentSchedule().getTickCount())){
 			//System.out.println(RunEnvironment.getInstance().getCurrentSchedule().getTickCount());
