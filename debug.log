@@ -1211,3 +1211,22 @@ Caused by: repast.simphony.space.SpatialException: Target location 70.5918420660
 	at queueService.User.moveTowards(User.java:62)
 	at queueService.User.step(User.java:48)
 	... 10 more
+FATAL [Thread-6] 2017-04-06 10:27:50,308 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (25794.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.reflect.InvocationTargetException
+	at queueService.Administration$$FastClassByCGLIB$$4b5fef48.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.ArrayIndexOutOfBoundsException: 207
+	at queueService.Administration.addUser(Administration.java:334)
+	... 10 more
