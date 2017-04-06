@@ -194,7 +194,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		int[][] coming =
 		    {
 	    		{ 0, 0, 0, 0, 0, 0, 0, 0 } , // tab[day][hour] 
-		        { 17, 17, 32, 37,34, 35, 17, 18},    //as we take caf paris 15 as example, only 4 opening days
+		        { 0, 0, 0, 0, 0, 0, 0, 0 },    //as we take caf paris 15 as example, only 4 opening days
 		        { 0, 0, 0, 0, 0, 0, 0, 0 },   //monday tuesday thursday friday, from 9am to 5pm 
 		        { 0, 0, 0, 0, 0, 0, 0, 0 },
 			};
@@ -207,7 +207,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		
 		for (int i=0;i<4;i++){
 			for (int j=0;j<8;j++){
-				//coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[j]);
+				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[j]);
 				//System.out.print(coming[i][j]);
 				//System.out.print(" ");
 			}
@@ -220,197 +220,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 	/* generates a list of users coming during one day, sorted by arrivalTime */
 	public static ArrayList<Double> getListOfArrivalTicks(int [][] comingMatrix, String day){
 		
-		double[] comingList={399,
-				1127,
-				1499,
-				286,
-				3355,
-				892,
-				2565,
-				1794,
-				302,
-				584,
-				2379,
-				1129,
-				50,
-				1899,
-				803,
-				471,
-				1172,
-				5995,
-				5353,
-				5186,
-				6997,
-				6320,
-				5620,
-				5015,
-				6781,
-				6691,
-				4405,
-				6181,
-				4548,
-				5124,
-				3659,
-				5169,
-				6508,
-				4414,
-				10318,
-				7699,
-				9462,
-				9507,
-				10058,
-				8268,
-				7447,
-				7798,
-				9896,
-				10612,
-				8018,
-				8415,
-				9210,
-				9042,
-				10118,
-				10234,
-				9949,
-				9359,
-				10148,
-				9252,
-				9741,
-				10509,
-				7980,
-				9948,
-				7479,
-				10781,
-				7913,
-				8975,
-				7409,
-				7845,
-				7456,
-				9352,
-				14113,
-				11482,
-				11873,
-				12816,
-				10940,
-				12442,
-				13482,
-				12243,
-				11759,
-				10809,
-				12159,
-				11953,
-				14296,
-				12032,
-				10957,
-				13172,
-				12321,
-				13984,
-				14080,
-				12007,
-				11285,
-				12686,
-				13083,
-				11763,
-				11081,
-				11838,
-				14125,
-				13746,
-				12648,
-				11956,
-				13422,
-				14361,
-				10928,
-				10872,
-				13227,
-				12269,
-				10932,
-				16342,
-				16998,
-				14469,
-				17037,
-				16711,
-				17088,
-				16270,
-				16747,
-				16346,
-				17159,
-				15544,
-				15227,
-				15908,
-				15967,
-				14879,
-				17071,
-				17660,
-				16312,
-				17859,
-				17242,
-				17370,
-				16969,
-				15831,
-				16600,
-				17699,
-				15534,
-				16969,
-				17080,
-				15520,
-				16162,
-				15294,
-				15988,
-				17375,
-				15810,
-				19407,
-				19688,
-				20284,
-				19895,
-				21347,
-				20803,
-				20673,
-				21543,
-				18851,
-				20639,
-				18402,
-				19441,
-				18720,
-				18797,
-				19606,
-				20134,
-				18475,
-				20450,
-				20034,
-				19014,
-				20975,
-				20003,
-				19471,
-				18681,
-				18487,
-				21129,
-				20373,
-				18716,
-				18256,
-				20939,
-				18929,
-				21396,
-				19420,
-				19472,
-				20903,
-				23000,
-				24042,
-				23957,
-				23817,
-				23752,
-				24361,
-				23085,
-				23843,
-				24452,
-				23219,
-				23664,
-				25118,
-				24557,
-				23806,22787,22309,23190,27613,27083,26447,26061,26725,27053,28005,26653,25523,27124,25596,26167,28773,26122,26135,25785,25678,27632};
-		ArrayList <Double> coming=new ArrayList<>();
-		for (int i=0; i<comingList.length; i++){
-			coming.add(comingList[i]);
-			
-		}
+		ArrayList<Double> coming = new ArrayList<>();
 		
 		String[] days = {"monday","tuesday","thursday","friday"};
 		
@@ -429,7 +239,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 		//Double oneHour=3600000.0;  
 		//parcours matrice du nb de gens qui viennent
 				
-		/*for (int j = 0; j < 8; j++){
+		for (int j = 0; j < 8; j++){
 			
 			int nb = 0;
 			int max = comingMatrix[indexDay][j];
@@ -439,7 +249,7 @@ public class AdministrationBuilder implements ContextBuilder<Object> {
 				coming.add(newTick);	
 				nb++;
 			}
-		}*/
+		}
 					
 		Collections.sort(coming);
 					
